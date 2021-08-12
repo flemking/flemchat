@@ -3,8 +3,9 @@ import styled from "styled-components";
 import ChatScreen from "../../components/ChatScreen";
 import Sidebar from "../../components/Sidebar";
 import { auth, db } from "../../firebase";
+import getRecipientEmail from "../../libs/getRecipientEmail";
 
-const Chat = () => {
+const Chat = ({ chat, messages }) => {
   const [user] = useAuthState(auth);
 
   return (

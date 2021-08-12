@@ -10,7 +10,7 @@ const Loading = () => {
         backgroundColor: "#212121",
       }}
     >
-      <h1 style={{ color: "#fff", fontSize: "2em" }}>FlemChat</h1>
+      <h1 style={{ color: "#fff", fontSize: "3em" }}>FlemChat</h1>
       <Circle color="#8224e3" />
     </center>
   );

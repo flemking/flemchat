@@ -2,14 +2,17 @@ import { Avatar, IconButton } from "@material-ui/core";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import styled from "styled-components";
-import { auth } from "../firebase";
-import MoreVertIcon from "@material-ui/icons/MoreVertIcon";
-import AttachFileIcon from "@material-ui/icons/AttachFileIcon";
+import firebase from "firebase";
+import { auth, db } from "../firebase";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
+import AttachFileIcon from "@material-ui/icons/AttachFile";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Message from "./Message";
 import { InsertEmoticonIcon } from "@material-ui/icons/InsertEmoticon";
 import MicIcon from "@material-ui/icons/Mic";
 import TimeAgo from "timeago-react";
+import { useRef, useState } from "react";
+import getRecipientEmail from "../libs/getRecipientEmail";
 
 const ChatScreen = ({ chat, messages }) => {
   const [user] = useAuthState(auth);
@@ -19,7 +22,7 @@ const ChatScreen = ({ chat, messages }) => {
   const [messagesSnapshot] = useCollection(
     db
       .collection("chats")
-      .docs(router.query.id)
+      .doc(router.query.id)
       .collection("messages")
       .orderBy("timestamp", "asc")
   );
@@ -58,7 +61,7 @@ const ChatScreen = ({ chat, messages }) => {
   const sendMessage = (e) => {
     e.preventDefault();
 
-    bd.collection("users").doc(user.uid).set(
+    db.collection("users").doc(user.uid).set(
       {
         lastSeen: firebase.firestore.FieldValue.serverTimestamp(),
       },
